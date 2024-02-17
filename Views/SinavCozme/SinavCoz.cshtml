@@ -1,0 +1,133 @@
+﻿@model Sinav
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sınav Sayfası</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .content-container {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        input[type="text"],
+        textarea {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid black;
+        }
+
+        .button {
+            background-color: green;
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-left: 220px;
+            width: 250px;
+        }
+
+        .button:hover {
+            background-color: limegreen;
+        }
+    </style>
+</head>
+<body>
+    <form id="sinavForm" method="post">
+        <div class="content-container">
+            <h4>Yazı</h4>
+
+            <label style="font-weight: bold;">Başlık</label>
+            <textarea rows="1" cols="50" readonly>@Model.Baslik</textarea>
+
+            <label style="font-weight: bold;">Açıklama</label>
+            <textarea rows="5" cols="50" readonly>@Model.Aciklama</textarea>
+
+            <br>
+            <br>
+            <h1 style="font-weight: bold;">Sorular</h1>
+
+            @foreach (var soru in Model.Sorular)
+            {
+                <div class="soru" data-soru-id="@(soru.Id)">
+                    <input type="text" name="soru-@(soru.Id)-metni" value="@soru.soruMetni" readonly>
+                    <br>
+
+                    <label>
+                        <input type="radio" name="soru-@(soru.Id)" value="A">
+                        A-)
+                    </label>
+                    <input type="text" style="width: 713px" name="soru-@(soru.Id)-secenekA" value="A) @soru.secenekA" readonly>
+                    <!-------------------------------------------------------------------------------------------------------->
+                    <label>
+                        <input type="radio" name="soru-@(soru.Id)" value="B">
+                        B-)
+                    </label>
+                    <input type="text" style="width: 713px" name="soru-@(soru.Id)-secenekB" value="B) @soru.secenekB" readonly>
+                    <!-------------------------------------------------------------------------------------------------------->
+                    <label>
+                        <input type="radio" name="soru-@(soru.Id)" value="C">
+                        C-)
+                    </label>
+                    <input type="text" style="width: 713px" name="soru-@(soru.Id)-secenekC" value="C) @soru.secenekC" readonly>
+                    <!-------------------------------------------------------------------------------------------------------->
+                    <label>
+                        <input type="radio" name="soru-@(soru.Id)" value="D">
+                        D-)
+                    </label>
+                    <input type="text" style="width: 713px" name="soru-@(soru.Id)-secenekD" value="D) @soru.secenekD" readonly>
+                    <!-------------------------------------------------------------------------------------------------------->
+                    <input type="hidden" id="dogruCevap-@(soru.Id)" name="dogruCevap-@(soru.Id)" value="@soru.dogruCevap">
+                    <span class="dogru-cevap"></span>
+                    <br>
+                    <br>
+                </div>
+            }
+            <button type="submit" class="button">Sınavı Tamamla</button>
+        </div>
+    </form>
+    <script>
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            document.querySelectorAll('.soru').forEach(function (soruDiv) {
+                var soruId = soruDiv.dataset.soruId;
+                var dogruCevap = document.getElementById('dogruCevap-' + soruId).value;
+                var secilenCevap = document.querySelector('input[name="soru-' + soruId + '"]:checked');
+
+                if (secilenCevap && secilenCevap.value === dogruCevap) {
+                    secilenCevap.parentNode.style.color = 'green';
+
+                    soruDiv.querySelector('.dogru-cevap').textContent = '';
+                } else {
+                    secilenCevap.parentNode.style.color = 'red';
+
+                    soruDiv.querySelector('.dogru-cevap').textContent = 'Doğru Cevap: ' + dogruCevap;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

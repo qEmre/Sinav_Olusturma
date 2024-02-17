@@ -1,0 +1,51 @@
+﻿@model List<Sinav>
+
+<style>
+    .table th, .table td {
+        border-bottom: none;
+    }
+
+    .table td a {
+        color: #000;
+        transition: color 0.3s;
+        text-decoration: none;
+    }
+
+    .table td a:hover {
+        color: #007BFF;
+    }
+</style>
+<div class="container" style="margin-top: 150px;">
+    <h3 style="color: red">Lütfen Sınav Seçiniz ↓↓↓</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Başlık</th>
+                <th>Tarih</th>
+                <th>Sınavı Çöz</th>
+                <th>Sınavı Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sinav in Model)
+            {
+                <tr>
+                    <td>@sinav.Id</td>
+                    <td>@sinav.Baslik</td>
+                    <td>@sinav.OlusturmaTarihi.ToString("dd.MM.yyyy")</td>
+                    <td>
+                        <form method="get" asp-controller="SinavCozme" asp-action="SinavCoz" asp-route-id="@sinav.Id">
+                            <button type="submit" class="btn btn-success" style="width: 125px;">Sınavı Çöz</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" asp-controller="SinavList" asp-action="Delete" asp-route-id="@sinav.Id">
+                            <button type="submit" class="btn btn-danger" style="width: 125px;">Sil</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

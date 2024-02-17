@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 150px;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-container label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .login-container input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .login-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Giriş Yap</h2>
+        @if (ViewBag.HataMesaj != null)
+        {
+            <p class="error-message">@ViewBag.HataMesaj</p>
+        }
+        <form method="post">
+            <label for="kullaniciAdi">Kullanıcı Adı:</label>
+            <input type="text" id="kullaniciAdi" name="kullaniciAdi" required>
+            <br>
+            <label for="sifre">Şifre:</label><br />
+            <input type="password" id="sifre" name="sifre" required>
+            <br>
+            <br>
+            <input type="submit" value="Giriş Yap">
+        </form>
+    </div>
+</body>
+</html>

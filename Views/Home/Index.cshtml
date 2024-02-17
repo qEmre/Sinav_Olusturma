@@ -1,0 +1,60 @@
+﻿@model List<RssItem>
+
+<style>
+    .table th, .table td {
+        border-bottom: none;
+    }
+
+        .table td a {
+            color: #000;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+            .table td a:hover {
+                color: #007BFF;
+            }
+
+    h3 {
+        color: red;
+    }
+
+</style>
+
+
+<div class="container" style="margin-top: 150px;">
+    <h3>Lütfen Başlık Seçiniz ↓↓↓</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Başlık</th>
+                <th>Tarih</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td><a href="/SinavOlusturma/Index?title=@Model[i].Title&description=@Model[i].Description">@Model[i].Title</a></td>
+                    <td><span class="dateSpan"></span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="/SinavList/Index" class="btn btn-info" style="width: 175px; margin-left: 1125px; margin-top: 20px;">
+        Sınavlar Listesine Git
+    </a>
+
+</div>
+<script>
+    var currentDate = new Date();
+    var formattedDate = currentDate.toLocaleDateString();
+
+    document.querySelectorAll('.dateSpan').forEach(function (span) {
+        span.textContent = formattedDate;
+    });
+</script>
